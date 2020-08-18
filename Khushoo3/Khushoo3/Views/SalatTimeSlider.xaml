@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             x:Class="Khushoo3.Views.SalatTimeSlider">
+    <ContentView.Content>
+            <StackLayout
+                Orientation="Vertical"
+                Spacing="24"
+                HorizontalOptions="FillAndExpand"
+              >
+
+
+                <!-- News Items -->
+                <cards:CoverFlowView
+                    HeightRequest="160"
+                    ItemsSource="{Binding salattime, Mode=OneWay}"
+                    IsViewReusingEnabled="False"
+                    PositionShiftValue="110">
+                    <x:Arguments>
+                        <proc:CoverFlowProcessor ScaleFactor="0.7" OpacityFactor="0.1" />
+                    </x:Arguments>
+
+                    <cards:CoverFlowView.ItemTemplate>
+                        <DataTemplate>
+                           <Grid BackgroundColor="Red" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="16">
+<Label Text="{Binding day }"
+       VerticalOptions="Center"
+       HorizontalOptions="Center"
+       TextColor="White"/>
+                           </Grid>
+                            </DataTemplate>
+                        </cards:CoverFlowView.ItemTemplate>
+                    </cards:CoverFlowView>
+                  
+                     </StackLayout>
+
+
+    </ContentView.Content>
+</ContentView>

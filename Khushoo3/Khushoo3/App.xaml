@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             mc:Ignorable="d"
+             x:Class="Khushoo3.App">
+    <Application.Resources>
+        <!--colors-->
+       <Color x:Key="Golden">#FFD500</Color>
+       <Color x:Key="Backgroundcolor">#191919</Color>
+
+        <!--Lable style-->
+        <!--Headerlable-->
+        <Style x:Key="Headerstyle" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource Golden}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="TajawalFont" />
+
+
+        </Style>
+        <!--Content Page Style-->
+
+         <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Backgroundcolor}" />
+            <Setter Property="BackgroundImageSource" Value="Background"/>
+            <Setter Property="ios:Page.UseSafeArea" Value="true" />
+        </Style>
+       
+        <!--Grid Styles-->
+        <Style TargetType="Grid">
+            <Setter Property="HorizontalOptions"  Value="FillAndExpand"/>
+            <Setter Property="VerticalOptions"    Value="FillAndExpand"/>
+            <Setter Property="ColumnSpacing"      Value="0"/>
+            <Setter Property="RowSpacing"         Value="0"/>
+
+        </Style>
+    </Application.Resources>
+</Application>

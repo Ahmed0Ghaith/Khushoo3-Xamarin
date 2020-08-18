@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:viewModel="clr-namespace:Khushoo3.ViewModel"
+            x:Class="Khushoo3.Views.TopHeader">
+    <ContentView>
+
+        <ContentView.BindingContext>
+        <viewModel:HomePageVM />
+    </ContentView.BindingContext>
+
+        <!-- Pager Header Top -->
+        <Grid
+           
+          
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+            <Label 
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+             Text="{Binding Hday , Mode=OneWay }"
+              
+                Style="{StaticResource Headerstyle}"
+                Margin="20,0"/>
+            <Label 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                Text="{Binding Hmonth , Mode=OneWay }"
+                  Style="{StaticResource Headerstyle}"
+                Margin="20,0"/>
+             <Label 
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                  Text="{Binding Hdate  , Mode=OneWay  ,StringFormat='{0:dd/MM/YYYY}'}"
+                Style="{StaticResource Headerstyle}"
+                Margin="32,0"/>
+</Grid>
+
+    </ContentView>
+</ContentView>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Khushoo3.Views.HomePage"
+           xmlns:Views="clr-namespace:Khushoo3.Views"
+             xmlns:viewModel="clr-namespace:Khushoo3.ViewModel"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             BackgroundImageSource="Background.png"
+>
+      <!--  Binding context for Home page  -->
+    <ContentPage.BindingContext>
+        <viewModel:HomePageVM />
+    </ContentPage.BindingContext>
+     <Grid
+         
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+        RowSpacing="0"
+        ColumnSpacing="0"
+        Padding="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnPlatform iOS=30, Android=30}" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Pager Header Top -->
+        <Grid
+           
+            Grid.Row="0"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+        <Views:TopHeader/>
+        </Grid>
+         <!--slider-->
+
+         
+
+
+                 <StackLayout
+                    
+                Orientation="Vertical"
+                Spacing="24"
+                HorizontalOptions="FillAndExpand"
+              >
+
+
+                <!-- News Items -->
+                <cards:CoverFlowView
+                    BackgroundColor="Pink"
+                    HeightRequest="160"
+                    ItemsSource="{Binding ssst, Mode=OneWay}"
+                    IsViewReusingEnabled="False"
+                    PositionShiftValue="110">
+                    <x:Arguments>
+                        <proc:CoverFlowProcessor ScaleFactor="0.7" OpacityFactor="0.1" />
+                    </x:Arguments>
+
+                    <cards:CoverFlowView.ItemTemplate>
+                        <DataTemplate>
+                           <Grid BackgroundColor="Red" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="16">
+<Label Text="{Binding ssst,Mode=OneWay} "
+       VerticalOptions="Center"
+       HorizontalOptions="Center"
+       TextColor="White"/>
+                           </Grid>
+                            </DataTemplate>
+                        </cards:CoverFlowView.ItemTemplate>
+                    </cards:CoverFlowView>
+                  
+                     </StackLayout>
+
+
+
+               <!-- Load Data -->
+           
+       
+          <!-- Busy Indicator -->
+      
+         </Grid>
+
+</ContentPage>
+     
