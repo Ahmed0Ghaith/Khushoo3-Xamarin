@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using PanCardView.Droid;
+using Environment = System.Environment;
+using System.IO;
 
 namespace Khushoo3.Droid
 {
@@ -23,7 +25,11 @@ namespace Khushoo3.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CardsViewRenderer.Preserve();
-            LoadApplication(new App());
+            string DataBaseName = "Timings_DB.sqlite";
+            string FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string FullPath = Path.Combine(FolderPath, DataBaseName);
+            LoadApplication(new App(FullPath));
+         //   LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

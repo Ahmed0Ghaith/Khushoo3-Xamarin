@@ -14,11 +14,20 @@ namespace Khushoo3
 {
     public partial class App : Application   
     {
+        public static string DataBaseLocation = string.Empty;
         public App()
         {
             InitializeComponent();
 
             MainPage = new HomePage();
+        }
+        public App(string _DataBaseLocation)
+        {
+            InitializeComponent();
+            DataBaseLocation = _DataBaseLocation;
+
+            MainPage = new HomePage();
+            
         }
 
         protected override void OnStart()

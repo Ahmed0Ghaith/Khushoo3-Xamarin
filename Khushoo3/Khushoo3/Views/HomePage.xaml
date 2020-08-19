@@ -3,15 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Khushoo3.Views.HomePage"
            xmlns:Views="clr-namespace:Khushoo3.Views"
-             xmlns:viewModel="clr-namespace:Khushoo3.ViewModel"
-             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
-             BackgroundImageSource="Background.png"
->
-      <!--  Binding context for Home page  -->
+             xmlns:VM="clr-namespace:Khushoo3.ViewModel"
+             BackgroundImageSource="Background"
+         BackgroundColor="#FFFFFF">
+    <!--   BackgroundImageSource="Background.png" -->
+    <!--  Binding context for Home page  -->
+
     <ContentPage.BindingContext>
-        <viewModel:HomePageVM />
+        <VM:HomePageVM/>
     </ContentPage.BindingContext>
-     <Grid
+    
+    <ContentPage.Content>
+        
+       <Grid
          
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand"
@@ -20,65 +24,57 @@
         Padding="0">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="{OnPlatform iOS=30, Android=30}" />
+            <RowDefinition Height="{OnPlatform iOS=50, Android=50}" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- Pager Header Top -->
-        <Grid
-           
-            Grid.Row="0"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
-
+        <Grid Grid.Row="0" >
         <Views:TopHeader/>
         </Grid>
-         <!--slider-->
-
-         
-
-
-                 <StackLayout
-                    
-                Orientation="Vertical"
-                Spacing="24"
-                HorizontalOptions="FillAndExpand"
-              >
-
-
-                <!-- News Items -->
-                <cards:CoverFlowView
-                    BackgroundColor="Pink"
-                    HeightRequest="160"
-                    ItemsSource="{Binding ssst, Mode=OneWay}"
-                    IsViewReusingEnabled="False"
-                    PositionShiftValue="110">
-                    <x:Arguments>
-                        <proc:CoverFlowProcessor ScaleFactor="0.7" OpacityFactor="0.1" />
-                    </x:Arguments>
-
-                    <cards:CoverFlowView.ItemTemplate>
-                        <DataTemplate>
-                           <Grid BackgroundColor="Red" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="16">
-<Label Text="{Binding ssst,Mode=OneWay} "
-       VerticalOptions="Center"
-       HorizontalOptions="Center"
-       TextColor="White"/>
-                           </Grid>
-                            </DataTemplate>
-                        </cards:CoverFlowView.ItemTemplate>
-                    </cards:CoverFlowView>
-                  
-                     </StackLayout>
+        <!--Content--> 
+        <ScrollView
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+                
+            <StackLayout>
+                <!--Slder-->
+                <Views:SalatTimeSlider Margin="0,0,0,10"/>
+                    <StackLayout BackgroundColor="Black" >
+                        <Grid   Margin="10,0"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                           
 
 
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions  >
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                            <Label Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                               
+                            </Label>
+                            <Label Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
+                            <Label Grid.Column="1"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
+                            <Label Grid.Column="0"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأعدادات" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
 
-               <!-- Load Data -->
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            
+            </ScrollView>
+
+            
+        <!-- Load Data -->
            
        
           <!-- Busy Indicator -->
       
          </Grid>
-
+    </ContentPage.Content>
 </ContentPage>
      

@@ -1,38 +1,109 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            
+             xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" 
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              x:Class="Khushoo3.Views.SalatTimeSlider">
     <ContentView.Content>
-            <StackLayout
+        <StackLayout
                 Orientation="Vertical"
                 Spacing="24"
                 HorizontalOptions="FillAndExpand"
-              >
+                IsVisible="{Binding DataLoaded, Mode=OneWay}">
 
-
-                <!-- News Items -->
-                <cards:CoverFlowView
+            <!-- News Items -->
+            <cards:CoverFlowView
                     HeightRequest="160"
-                    ItemsSource="{Binding salattime, Mode=OneWay}"
+                    ItemsSource="{Binding SalatTime , Mode=OneWay}"
                     IsViewReusingEnabled="False"
                     PositionShiftValue="110">
-                    <x:Arguments>
-                        <proc:CoverFlowProcessor ScaleFactor="0.7" OpacityFactor="0.1" />
-                    </x:Arguments>
 
-                    <cards:CoverFlowView.ItemTemplate>
-                        <DataTemplate>
-                           <Grid BackgroundColor="Red" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="16">
-<Label Text="{Binding day }"
-       VerticalOptions="Center"
-       HorizontalOptions="Center"
-       TextColor="White"/>
-                           </Grid>
-                            </DataTemplate>
-                        </cards:CoverFlowView.ItemTemplate>
-                    </cards:CoverFlowView>
-                  
-                     </StackLayout>
+                <x:Arguments>
+                    <proc:CoverFlowProcessor ScaleFactor="0.5" OpacityFactor="0.1" />
+                </x:Arguments>
+
+                <cards:CoverFlowView.ItemTemplate>
+
+                    <DataTemplate>
+                        <pancakeview:PancakeView
+                                Padding="0"
+                             
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"         
+                                Margin="60,0"
+                                CornerRadius="10">
+
+                            <Grid>
+
+                                <!--Salat Image-->
+                                <Image
+                                        VerticalOptions="Fill"
+                                        HorizontalOptions="Fill"
+                                        Margin="0"                                     
+                                        Aspect="AspectFill"                                        
+                                        Source="{Binding IMGURI, Mode=OneWay}">
+
+                                </Image>
+
+                                <!-- Bottom Shadow -->
+                                <pancakeview:PancakeView
+                                        BackgroundGradientAngle="0"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="End"
+                                        HeightRequest="50">
+
+                                    <pancakeview:PancakeView.BackgroundGradientStops>
+                                        <pancakeview:GradientStopCollection>
+                                            <pancakeview:GradientStop Color="#00000000" Offset="0" />
+                                            <pancakeview:GradientStop Color="#CCFFFFFF" Offset="1" />
+                                        </pancakeview:GradientStopCollection>
+                                    </pancakeview:PancakeView.BackgroundGradientStops>
+                                </pancakeview:PancakeView>
+
+                                <!-- News Headline -->
+                                <Label
+                                        Text="{Binding Salat }"
+                                      FontSize="30"
+                                        FontFamily="GaliModernFont"
+                                        TextColor="Black"
+                                        VerticalOptions="End"
+                                        HorizontalOptions="Fill"
+                                        Margin="8,0,8,4"
+                                        MaxLines="2"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="0.8"/>
+
+                                <pancakeview:PancakeView
+                                        Padding="10,0"
+                                        HeightRequest="22"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        BackgroundColor="{StaticResource Golden}"
+                                        Margin="8,8,8,0"
+                                        CornerRadius="4">
+
+                                    <Label
+                                            Text="{Binding Time }"
+                                           FontSize="15"
+                                            TextColor="Black"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            VerticalTextAlignment="Center"/>
+
+                                </pancakeview:PancakeView>
+
+                            </Grid>
+
+                        </pancakeview:PancakeView>
+                    </DataTemplate>
+                </cards:CoverFlowView.ItemTemplate>
+
+            </cards:CoverFlowView>
+
+
+        </StackLayout>
 
 
     </ContentView.Content>

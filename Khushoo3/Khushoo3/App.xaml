@@ -10,6 +10,7 @@
         <!--colors-->
        <Color x:Key="Golden">#FFD500</Color>
        <Color x:Key="Backgroundcolor">#191919</Color>
+        <Color x:Key="LightTextColor">#EEEEEE</Color>
 
         <!--Lable style-->
         <!--Headerlable-->
@@ -25,17 +26,29 @@
          <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
             <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
             <Setter Property="BackgroundColor" Value="{StaticResource Backgroundcolor}" />
-            <Setter Property="BackgroundImageSource" Value="Background"/>
+       
             <Setter Property="ios:Page.UseSafeArea" Value="true" />
         </Style>
        
         <!--Grid Styles-->
-        <Style TargetType="Grid">
+        <Style TargetType="Grid" >
             <Setter Property="HorizontalOptions"  Value="FillAndExpand"/>
             <Setter Property="VerticalOptions"    Value="FillAndExpand"/>
             <Setter Property="ColumnSpacing"      Value="0"/>
             <Setter Property="RowSpacing"         Value="0"/>
 
+        </Style>
+
+        <Style TargetType="Label" x:Key="NewsHeadlineTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="MediumFont" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="NewsSourceTextStyle">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
         </Style>
     </Application.Resources>
 </Application>
