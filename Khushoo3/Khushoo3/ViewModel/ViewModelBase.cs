@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Khushoo3.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -10,6 +12,7 @@ namespace Khushoo3.ViewModel
     {
 
       
+
         private DateTimeOffset _Timestamp ;
         public DateTimeOffset Timestamp
         {
@@ -81,21 +84,26 @@ namespace Khushoo3.ViewModel
         }
 
 
-        public ViewModelBase()
-        {
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public void OnPropertyChanged(string PropertyName)
         {
-            var changed = PropertyChanged;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
 
-            if (changed == null)
-                return;
 
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+        //public event PropertyChangedEventHandler PropertyChanged;
+
+        //    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        //    {
+        //        var changed = PropertyChanged;
+
+        //        if (changed == null)
+        //            return;
+
+        //        changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //    }
 
         protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
         {

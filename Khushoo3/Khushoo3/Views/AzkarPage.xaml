@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:VM="clr-namespace:Khushoo3.ViewModel"
+             x:Class="Khushoo3.Views.AzkarPage">
+    
+  <ContentView.Content>
+        <CollectionView Margin="7,0"      ItemsSource="{Binding AzkarList}" x:Name="AzkarList"        
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ItemSizingStrategy="MeasureFirstItem"     
+                      
+                        
+            >
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="15"
+                        Span="1"  />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate >
+                <DataTemplate>
+                    <Grid   Padding="5">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer x:Name="SelectedItem" Command="{Binding Source={RelativeSource AncestorType={x:Type VM:HomePageVM}}, Path=Zekr}"		 CommandParameter="{Binding .}"
+                                />
+                        </Grid.GestureRecognizers>
+                        <pancakeview:PancakeView
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Fill"
+                       CornerRadius="4" >
+                       
+                        
+
+                                <pancakeview:PancakeView.BackgroundGradientStops>
+                                    <pancakeview:GradientStopCollection>
+                                        <pancakeview:GradientStop Color="#00000000" Offset="0" />
+                                        <pancakeview:GradientStop Color="#CC000000" Offset="1" />
+                                    </pancakeview:GradientStopCollection>
+                                </pancakeview:PancakeView.BackgroundGradientStops>
+                  
+                            <Grid Padding="10" RowDefinitions="55"   HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
+                                
+                                <Label Text="{Binding Key }" Margin="10,0"  VerticalOptions="Center" TextColor="{StaticResource Golden}" FontSize="25" FontFamily="GaliModernFont">
+                                  
+                                </Label>
+
+                            </Grid>
+                        </pancakeview:PancakeView>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </ContentView.Content>
+</ContentView>

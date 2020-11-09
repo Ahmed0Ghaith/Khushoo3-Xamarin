@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,19 +17,27 @@ namespace Khushoo3.ViewModel
 {
     public class HomePageVM : ViewModelBase
     {
-        private ObservableCollection<TodayST> _SalatTime;
-        public ObservableCollection<TodayST> SalatTime
+        public ObservableCollection<IGrouping<string, Azkar>> AzkarList { get; set; }
+        public ObservableCollection<TodayST> SalatTime { get; set; }
+        public ObservableCollection<Azkar> Azkar { get; set; }
+     
+        public Command<IGrouping<string, Azkar>> Zekr { get; set; }
+
+        public Command<PanCardView.EventArgs.ItemAppearedEventArgs> ZekrCountr { get; set; }
+      
+
+        public Command CounterTapped { get; set; }
+
+        public Command ClosePoP { get; set; }
+
+        private  bool _PopUPZekrPage = false;
+        public bool PopUPZekrPage
         {
-            get => _SalatTime;
-            set => SetProperty(ref _SalatTime, value);
+            get => _PopUPZekrPage;
+            set => SetProperty(ref _PopUPZekrPage, value);
         }
-        // List<string> ssst;
-        //private ObservableCollection<DBST> _SalatTime;
-        //public ObservableCollection<DBST> SalatTime
-        //{
-        //    get => _SalatTime;
-        //    set => SetProperty(ref _SalatTime, value);
-        //}
+       
+
 
         private List<Datum> _salattime;
         public List<Datum> salattime
@@ -49,6 +58,12 @@ namespace Khushoo3.ViewModel
             get => _Hday;
             set => SetProperty(ref _Hday, value);
         }
+        private string _Counter;
+        public string Counter
+        {
+            get => _Counter;
+            set => SetProperty(ref _Counter, value);
+        }
         private string _Hmonth;
         public string Hmonth
         {
@@ -62,27 +77,136 @@ namespace Khushoo3.ViewModel
             set => SetProperty(ref _Hdate, value);
         }
 
-        bool isAlreadyLoaded = false;
-
-        SQLiteConnection Con;
-     //   public ICommand LoadData { get; set; }
-
+        readonly SQLiteConnection Con;
+  
+    
          public  HomePageVM()
         {
             
                 SalatTime = new ObservableCollection<TodayST>();
-            Con = new SQLiteConnection(App.DataBaseLocation);
-           
-          
-                _ = LoadSalatData();
+            Azkar = new ObservableCollection<Azkar>();
 
+            AzkarList = new ObservableCollection<IGrouping<string, Azkar>>();
+                Zekr = new Command<IGrouping<string, Azkar>>(Selected);
+                Con = new SQLiteConnection(App.DataBaseLocation);
+                ClosePoP = new Command(Close);
+                ZekrCountr = new Command<PanCardView.EventArgs.ItemAppearedEventArgs>(ZekrTimes);
                
-            
+                CounterTapped = new Command(CTapped);
+                ZekrFilter();
+                _ = LoadSalatData();
+          
+
         }
+
+       
+
+        private async void CTapped(object obj)
+        {
+           
+            var Button = obj as Button;
+          
+        
+            int count = int.Parse(Button.Text);
+            if (count > 0)
+            {
+                Button.BorderColor = Color.FromHex("#FFD500");
+            Button.BorderWidth = 2;
+            await Task.Delay(100);
+                Counter = (count - 1).ToString();
+              
+            } else if (count == 0)
+
+            {
+                try
+                {
+
+                    var duration = TimeSpan.FromSeconds(0.2);
+                    Vibration.Vibrate(duration);
+
+
+                }
+                catch (FeatureNotSupportedException ex)
+                {
+                    // Feature not supported on device
+                }
+                catch (Exception ex)
+                {
+                    // Other error has occurred.
+                }
+            }
+            Button.BorderColor = Color.FromHex("#ffed94");
+        
+
+        }
+
+        private void ZekrTimes(PanCardView.EventArgs.ItemAppearedEventArgs obj)
+        {
+            string Count = "1";
+            var Item = obj.Item as Azkar;
+            if (!string.IsNullOrEmpty(Item.count))
+            {
+                Count = Item.count;
+                
+            }
+            Counter = Count;
+
+        }
+
+        void ZekrFilter()
+        {
+            
+
+
+            zekrinfo ZekrList = GetAzkar.GetJsonData();
+            var list = ZekrList.Azkar.ToList();
+            IEnumerable<IGrouping<string, Azkar>> Category = from p in list
+                                                             group p by p.category
+                                                             into G
+
+                                                             select G;
+
+            foreach (var item in Category)
+            {
+               
+                AzkarList.Add(item);
+            }
+
+
+        }
+
+        private void Close(object obj)
+        {
+           
+            PopUPZekrPage = false;
+           
+        }
+        private async void Selected(IGrouping<string, Azkar> obj)
+        {
+
+            
+
+            Azkar.Clear();
+            PopUPZekrPage = true;
+            foreach (var i in obj)
+            {
+                Azkar.Add(i);
+            }
+          
+          
+
+        }
+       
+
+
+
         List<string> imgs;
         int ImageNO = 0;
         public async Task LoadSalatData()
         {
+
+         
+
             int ImageNO = 0;
             IsBusy = true;
             DataLoaded = false;
@@ -99,9 +223,9 @@ namespace Khushoo3.ViewModel
 
 
 
-                var fd = DateTime.Parse(Table[0].Date).ToString("dd");
+                var fd = DateTime.Parse(Table[0].Date).ToString("MMM");
 
-                    if (DateTime.Parse(Table[0].Date).ToString("dd") == DateTime.Now.ToString("MM"))
+                    if (DateTime.Parse(Table[0].Date).ToString("MMM") == DateTime.Now.ToString("MMM"))
                     {
                      imgs = new List<string>();
                     imgs.Add("FR");
@@ -149,12 +273,12 @@ namespace Khushoo3.ViewModel
         //requst from DB
         public async void RequstDB(DBST Item)
         {
-           
-
-            
 
 
-            if (Item.Date == DateTime.Now.ToString("dd-MM-yyyy"))
+
+            string t = Item.Date;
+            string yn = DateTime.Now.ToString("dd MMM yyyy");
+            if (Item.Date == DateTime.Now.ToString("dd MMM yyyy"))
                         {
                             if (string.IsNullOrEmpty(Hdate))
                             {
@@ -186,11 +310,11 @@ namespace Khushoo3.ViewModel
             Timestamp = locator.Timestamp;
             Latitude = locator.Latitude;
             Longitude = locator.Longitude;
-            var dates = DateTime.Now.ToString("MMddyyyy");
-
-
-
-            var info = await RestHelper.GetAsync<Root>($"https://api.aladhan.com/v1/calendar?latitude={Latitude}&longitude={Longitude}&method=5&month=8&year=2020");
+            //    var dates = DateTime.Now.ToString("MMddyyyy");
+            Con.DeleteAll<DBST>();
+            string Month=   DateTime.Now.ToString("MM");
+              
+            var info = await RestHelper.GetAsync<Root>($"https://api.aladhan.com/v1/calendar?latitude={Latitude}&longitude={Longitude}&method=5&month={Month}&year=2020");
 
             salattime = info.data;
 
@@ -208,12 +332,12 @@ namespace Khushoo3.ViewModel
                 List<DBST> TS = new List<DBST>()
 
                 {
-                    new DBST{Salat ="صلاة الفجر" , Time= Fajr ,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
-                    new DBST{Salat ="شروق الشمس" , Time= Sunrise,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
-                    new DBST{Salat ="صلاة الظهر " , Time= Dhuhr,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
-                    new DBST{Salat ="صلاة العصر" , Time= Asr,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
-                    new DBST{Salat ="صلاة المغرب" , Time= Maghrib,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
-                    new DBST{Salat ="صلاة العشاء" , Time= Isha,Date = Item.date.gregorian.date ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="صلاة الفجر" , Time= Fajr ,Date =Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="شروق الشمس" , Time= Sunrise,Date = Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="صلاة الظهر " , Time= Dhuhr,Date =Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="صلاة العصر" , Time= Asr,Date = Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="صلاة المغرب" , Time= Maghrib,Date = Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
+                    new DBST{Salat ="صلاة العشاء" , Time= Isha,Date =Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
                 };
 
                 foreach (var item in TS)
@@ -223,7 +347,7 @@ namespace Khushoo3.ViewModel
 
                 }
             }
-            isAlreadyLoaded = true;
+          
             LoadSalatData();
 
 

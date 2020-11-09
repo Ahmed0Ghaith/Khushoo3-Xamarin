@@ -16,8 +16,10 @@
             <!-- News Items -->
             <cards:CoverFlowView
                     HeightRequest="160"
+                 IsViewReusingEnabled="False"
+                   IsCyclical="False"
                     ItemsSource="{Binding SalatTime , Mode=OneWay}"
-                    IsViewReusingEnabled="False"
+                 
                     PositionShiftValue="110">
 
                 <x:Arguments>
@@ -49,7 +51,7 @@
 
                                 <!-- Bottom Shadow -->
                                 <pancakeview:PancakeView
-                                        BackgroundGradientAngle="0"
+                                
                                         HorizontalOptions="Fill"
                                         VerticalOptions="End"
                                         HeightRequest="50">
@@ -62,7 +64,7 @@
                                     </pancakeview:PancakeView.BackgroundGradientStops>
                                 </pancakeview:PancakeView>
 
-                                <!-- News Headline -->
+                               
                                 <Label
                                         Text="{Binding Salat }"
                                       FontSize="30"
