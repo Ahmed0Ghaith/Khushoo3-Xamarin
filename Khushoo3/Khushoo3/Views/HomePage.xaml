@@ -47,12 +47,13 @@
                     <StackLayout>
                         <!--Slider-->
                         <Views:SalatTimeSlider  Margin="0,0,0,10"/>
-                        <StackLayout BackgroundColor="Black" >
-                            <Grid  RowDefinitions="50" ColumnDefinitions="*,*,*,*" Margin="10,0"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
+                        <StackLayout BackgroundColor="Black"  >
+                            <Grid RowDefinitions="50"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
+                            <Grid IsVisible="true"  ColumnDefinitions="*,*,*,*"   >
 
                                 <Label Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type VM:HomePageVM}}, Path=ii}"  />
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"  />
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <Label Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
@@ -60,7 +61,28 @@
                                 <Label Grid.Column="0"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأعدادات" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
 
                             </Grid>
+                                <!--<StackLayout  BackgroundColor="#1f1f1f" IsVisible="false" x:Name="search" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                                    <Entry Placeholder="بحث" FontFamily="TajawalFont"  x:Name="SearchZekr" Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f" Opacity="0.8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="End" />
+                                </StackLayout>-->
+                                <Grid x:Name="search" Opacity="0.9" BackgroundColor="#1f1f1f"  ColumnDefinitions="auto,*" IsVisible="false">
+
+                                    <Image x:Name="CloseImage" HorizontalOptions="Center" Grid.Column="0" HeightRequest="40" Source="BackSearch" >
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OverlayTapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+
+                                    <Grid   Grid.Column="1"  x:Name="SearchZekr" WidthRequest="340" 
+                  HorizontalOptions="EndAndExpand" BackgroundColor="#1f1f1f" Opacity="0.9"  >
+
+                                        <Entry Text="{Binding SearchZekr}" Placeholder="بحث" PlaceholderColor="LightGray" FontFamily="TajawalFont"   Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f"   HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="End" />
+
+                                    </Grid>
+                                    
+                                </Grid>
+                            </Grid>
                         </StackLayout>
+                      
                     </StackLayout>
 
                 </StackLayout>

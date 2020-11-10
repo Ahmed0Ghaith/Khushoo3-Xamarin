@@ -17,7 +17,10 @@ namespace Khushoo3.ViewModel
 {
     public class HomePageVM : ViewModelBase
     {
+        zekrinfo ZekrList;
         public ObservableCollection<IGrouping<string, Azkar>> AzkarList { get; set; }
+      
+
         public ObservableCollection<TodayST> SalatTime { get; set; }
         public ObservableCollection<Azkar> Azkar { get; set; }
      
@@ -52,6 +55,19 @@ namespace Khushoo3.ViewModel
             set => SetProperty(ref _Hijri, value);
         }
 
+        private string _SearchZekr;
+
+        public string SearchZekr
+        {
+            get { return _SearchZekr; }
+            set {
+                _SearchZekr = value;
+                Search();
+            }
+        }
+
+       
+
         private string _Hday;
         public string Hday
         {
@@ -82,6 +98,7 @@ namespace Khushoo3.ViewModel
     
          public  HomePageVM()
         {
+
             
                 SalatTime = new ObservableCollection<TodayST>();
             Azkar = new ObservableCollection<Azkar>();
@@ -93,6 +110,7 @@ namespace Khushoo3.ViewModel
                 ZekrCountr = new Command<PanCardView.EventArgs.ItemAppearedEventArgs>(ZekrTimes);
                
                 CounterTapped = new Command(CTapped);
+            ZekrList = new zekrinfo();
                 ZekrFilter();
                 _ = LoadSalatData();
           
@@ -153,12 +171,48 @@ namespace Khushoo3.ViewModel
 
         }
 
+        private void Search()
+        {
+            AzkarList.Clear();
+            IEnumerable<IGrouping<string, Azkar>> Category;
+          if (!string.IsNullOrEmpty(SearchZekr))
+          {
+
+
+                var list = ZekrList.Azkar.ToList();
+            Category = from p in list
+                                                                 group p by p.category
+                                                                 into G
+                                                                 where G.Key.Contains(SearchZekr)
+                                                                 select G;
+          }
+          else
+          {
+                var list = ZekrList.Azkar.ToList();
+                Category = from p in list
+                                                                 group p by p.category
+                                                                 into G
+
+                                                                 select G;
+
+              
+
+          }
+     
+            foreach (var item in Category)
+                {
+
+                    AzkarList.Add(item);
+                }
+            
+
+        }
         void ZekrFilter()
         {
             
 
 
-            zekrinfo ZekrList = GetAzkar.GetJsonData();
+            ZekrList = GetAzkar.GetJsonData();
             var list = ZekrList.Azkar.ToList();
             IEnumerable<IGrouping<string, Azkar>> Category = from p in list
                                                              group p by p.category

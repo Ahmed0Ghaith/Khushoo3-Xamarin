@@ -27,5 +27,38 @@ namespace Khushoo3.Views
           
 
         }
+
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            //    search.IsVisible = true;
+            //    Action<double> callback = input => SearchZekr.TranslationX = input;
+            //    SearchZekr.Animate("anim", callback, 260, 0, 16, 300, Easing.CubicInOut);
+            OpenMenu();
+        }
+        private void MenuTapped(object sender, EventArgs e)
+        {
+            OpenMenu();
+            // OpenVedio();
+
+        }
+        private void OverlayTapped(object sender, EventArgs e)
+        {
+            CloseMenu();
+        }
+
+        private void OpenMenu()
+        {
+            search.IsVisible = true;
+
+            Action<double> callback = input => SearchZekr.TranslationX = input;
+            SearchZekr.Animate("anim", callback, 280, 0, 16, 300, Easing.CubicInOut);
+        }
+
+        private void CloseMenu()
+        {
+          
+
+            search.IsVisible = false;
+        }
     }
 }

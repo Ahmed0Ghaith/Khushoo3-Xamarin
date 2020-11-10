@@ -164,4 +164,49 @@
   <ItemGroup>
     <BundleResource Include="Resources\Background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AS.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\BackSearch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\BellDisable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\BellEnable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FR.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\IS.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MA.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SearchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SR.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ZH.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait.png" />
+  </ItemGroup>
 </Project>

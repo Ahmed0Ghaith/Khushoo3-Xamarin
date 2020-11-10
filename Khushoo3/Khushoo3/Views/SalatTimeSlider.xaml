@@ -16,8 +16,8 @@
             <!-- News Items -->
             <cards:CoverFlowView
                     HeightRequest="160"
-                 IsViewReusingEnabled="False"
-                   IsCyclical="False"
+                    IsViewReusingEnabled="False"
+                    IsCyclical="False"
                     ItemsSource="{Binding SalatTime , Mode=OneWay}"
                  
                     PositionShiftValue="110">

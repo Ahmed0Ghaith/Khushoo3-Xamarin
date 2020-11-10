@@ -18,7 +18,7 @@ namespace Khushoo3.ViewModel
 
 
 
-        public Command<IGrouping<string, Azkar>> Zekr { get; set; }
+      
 
         public Command ClosePoP { get; set; }
        
