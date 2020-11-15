@@ -49,31 +49,43 @@
                         <Views:SalatTimeSlider  Margin="0,0,0,10"/>
                         <StackLayout BackgroundColor="Black"  >
                             <Grid RowDefinitions="50"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
-                            <Grid IsVisible="true"  ColumnDefinitions="*,*,*,*"   >
+                            <Grid IsVisible="true"  ColumnDefinitions="auto,*,*,*,*"   >
+                                  
+                                    <Label Grid.Column="4"  x:Name="Zekr" HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ZekrTabbed" NumberOfTapsRequired="1" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label x:Name="Qibla" Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}" >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
 
-                                <Label Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
-                                    <Label.GestureRecognizers>
+                                    <Label Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label Grid.Column="1"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأعدادات" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
+                                <Image Grid.Column="0" Margin="2" WidthRequest="30" HorizontalOptions="Center" Source="SearchIcon" VerticalOptions="Center" >
+                                    <Image.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"  />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <Label Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
-                                <Label Grid.Column="1"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
-                                <Label Grid.Column="0"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأعدادات" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
 
-                            </Grid>
-                                <!--<StackLayout  BackgroundColor="#1f1f1f" IsVisible="false" x:Name="search" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
-                                    <Entry Placeholder="بحث" FontFamily="TajawalFont"  x:Name="SearchZekr" Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f" Opacity="0.8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="End" />
-                                </StackLayout>-->
-                                <Grid x:Name="search" Opacity="0.9" BackgroundColor="#1f1f1f"  ColumnDefinitions="auto,*" IsVisible="false">
+                                </Grid>
+                               
+                                <Grid x:Name="search"  BackgroundColor="#1f1f1f"  ColumnDefinitions="auto,*" IsVisible="false">
 
-                                    <Image x:Name="CloseImage" HorizontalOptions="Center" Grid.Column="0" HeightRequest="40" Source="BackSearch" >
+                                    <Image x:Name="CloseImage" HorizontalOptions="Center" Grid.Column="0" HeightRequest="30" Source="BackSearch" >
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OverlayTapped"/>
                                         </Image.GestureRecognizers>
                                     </Image>
 
                                     <Grid   Grid.Column="1"  x:Name="SearchZekr" WidthRequest="340" 
-                  HorizontalOptions="EndAndExpand" BackgroundColor="#1f1f1f" Opacity="0.9"  >
+                                                 HorizontalOptions="EndAndExpand" BackgroundColor="#1f1f1f" Opacity="0.9"  >
 
                                         <Entry Text="{Binding SearchZekr}" Placeholder="بحث" PlaceholderColor="LightGray" FontFamily="TajawalFont"   Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f"   HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="End" />
 
@@ -88,9 +100,13 @@
                 </StackLayout>
 
                 <!--AzkarPage-->
-                <StackLayout Grid.Row="2"   HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout Grid.Row="2" x:Name="AzkarView"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Views:AzkarPage/>
                 </StackLayout>
+                <!--QiblaView-->
+                <Grid Grid.Row="2"  x:Name="QiblaView" IsVisible="false" >
+                    <Views:QiblaView/>
+                </Grid>
                 <!-- Load Data -->
 
 

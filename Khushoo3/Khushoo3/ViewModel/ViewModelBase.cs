@@ -19,13 +19,13 @@ namespace Khushoo3.ViewModel
             get => _Timestamp;
             set => SetProperty(ref _Timestamp, value);
         }
-        private double _Latitude;
-        public double Latitude
+        public static double _Latitude;
+        public  double Latitude
         {
             get => _Latitude;
             set => SetProperty(ref _Latitude, value);
         }
-        private double _Longitude;
+        public static double _Longitude;
         public double Longitude
         {
             get => _Longitude;

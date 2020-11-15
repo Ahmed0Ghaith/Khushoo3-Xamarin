@@ -60,5 +60,23 @@ namespace Khushoo3.Views
 
             search.IsVisible = false;
         }
+
+        private void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void QiblaTabbed(object sender, EventArgs e)
+        {
+            AzkarView.IsVisible = false;
+            QiblaView.IsVisible = true;
+        }
+
+        private void ZekrTabbed(object sender, EventArgs e)
+        {
+
+            AzkarView.IsVisible = true;
+            QiblaView.IsVisible = false;
+        }
     }
 }

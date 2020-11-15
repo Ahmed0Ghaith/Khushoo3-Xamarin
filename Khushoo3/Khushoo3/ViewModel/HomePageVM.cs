@@ -144,13 +144,10 @@ namespace Khushoo3.ViewModel
 
 
                 }
-                catch (FeatureNotSupportedException ex)
-                {
-                    // Feature not supported on device
-                }
+               
                 catch (Exception ex)
                 {
-                    // Other error has occurred.
+                
                 }
             }
             Button.BorderColor = Color.FromHex("#ffed94");

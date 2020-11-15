@@ -96,6 +96,45 @@
 
                                 </pancakeview:PancakeView>
 
+
+                                <pancakeview:PancakeView
+                                    Margin="5"
+                                        HeightRequest="35"
+                                        WidthRequest="35"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                 
+                                      BackgroundColor="#f1f1f1"
+                                    Opacity="0.8"
+                                     
+                                        CornerRadius="20">
+                                   
+                                
+                                <ImageButton
+                                      
+                                    BackgroundColor="Transparent"
+                               
+                                   
+                                                 
+                                            HeightRequest="30"
+                                            WidthRequest="30"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            Source="BellDisable.png"
+                                        />
+                                </pancakeview:PancakeView>
+                                <ImageButton IsVisible="false"
+                                            BackgroundColor="Transparent"
+                                            Margin="8"  
+                                            HeightRequest="30"                                             
+                                            VerticalOptions="Start"                                             
+                                            HorizontalOptions="Start"
+                                            Source="BellEnable.png"
+                                        />
+
+
+
+
                             </Grid>
 
                         </pancakeview:PancakeView>
