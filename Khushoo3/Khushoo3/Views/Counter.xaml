@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Khushoo3.Views.Counter">
+  <ContentView.Content>
+      <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+            <Label TextColor="LightGray" HorizontalOptions="CenterAndExpand" x:Name="tens" Text="0" Margin="20" FontSize="20" />
+            <Button Margin="20" BorderColor="#ffed94" BorderWidth="3" x:Name="CounterButton" HorizontalOptions="Center"  TextColor="White" Clicked="CounterButton_Clicked" VerticalOptions="CenterAndExpand"  BackgroundColor="#1f1f1f" HeightRequest="100" WidthRequest="100" CornerRadius="50"  Text="0"/>
+            <Label TextColor="Gray" HorizontalOptions="CenterAndExpand" x:Name="Total" Text="0" Margin="20" FontSize="20" />
+
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

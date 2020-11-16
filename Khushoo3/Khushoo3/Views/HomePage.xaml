@@ -8,7 +8,7 @@
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" 
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView" xmlns:SyncfusionGauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
              BackgroundImageSource="Background"
          BackgroundColor="#FFFFFF">
     <!--   BackgroundImageSource="Background.png" -->
@@ -56,13 +56,13 @@
                                             <TapGestureRecognizer Tapped="ZekrTabbed" NumberOfTapsRequired="1" />
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <Label x:Name="Qibla" Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}" >
+                                    <Label  x:Name="Counter" Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}" >
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
+                                            <TapGestureRecognizer Tapped="CounterTapped" NumberOfTapsRequired="1" />
                                         </Label.GestureRecognizers>
                                     </Label>
 
-                                    <Label Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                                    <Label x:Name="Qibla" Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
                                         </Label.GestureRecognizers>
@@ -103,9 +103,81 @@
                 <StackLayout Grid.Row="2" x:Name="AzkarView"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Views:AzkarPage/>
                 </StackLayout>
+               
+                <!--CounterView-->
+                <Grid Grid.Row="2"  x:Name="CounterView" IsVisible="false" >
+                    <Views:Counter/>
+                </Grid>
+                
                 <!--QiblaView-->
                 <Grid Grid.Row="2"  x:Name="QiblaView" IsVisible="false" >
-                    <Views:QiblaView/>
+                    <Grid Padding="20" x:Name="Window"  BackgroundColor="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Frame  Margin="20"  HorizontalOptions="Center" Padding="0" HeightRequest="55"
+                   WidthRequest="55"
+                     CornerRadius="50"
+                     BackgroundColor="#f1f1f1">
+                            <Image   Source="qibla"
+                   HeightRequest="50"
+                    
+                   WidthRequest="50"
+               HorizontalOptions="CenterAndExpand" />
+                        </Frame>
+                        <SyncfusionGauge:SfCircularGauge Grid.Row="1"
+                                         x:Name="circularGauge"
+                                         BackgroundColor="Transparent"
+                                         HorizontalOptions="CenterAndExpand"
+                                         VerticalOptions="CenterAndExpand">
+                            <SyncfusionGauge:SfCircularGauge.Scales>
+                                <SyncfusionGauge:Scale x:Name="scale"
+                                       StartAngle="270"
+                                       StartValue="0"
+                                       EndValue="360"
+                                       Interval="45"
+                                       LabelOffset="0.75"
+                                       SweepAngle="360"
+                                       MinorTicksPerInterval="1"
+                                       ShowLastLabel="False"
+                                       ScaleStartOffset="0.99"
+                                       ScaleEndOffset="0.9"
+                                       >
+                                    <SyncfusionGauge:Scale.Pointers>
+
+                                        <SyncfusionGauge:NeedlePointer x:Name="pointer1"
+                                                       Type="Triangle"
+                                                       LengthFactor="0.65"
+                                                       KnobColor="White"
+                                                       Thickness="25"
+                                                           
+                                                       EnableAnimation="True">
+                                            <SyncfusionGauge:NeedlePointer.KnobRadius>
+                                                <OnPlatform x:TypeArguments="x:Double">
+                                                    <On Platform="Android"
+                                        Value="25" />
+                                                    <On Platform="iOS"
+                                        Value="25" />
+                                                </OnPlatform>
+                                            </SyncfusionGauge:NeedlePointer.KnobRadius>
+                                        </SyncfusionGauge:NeedlePointer>
+                                    </SyncfusionGauge:Scale.Pointers>
+                                    <SyncfusionGauge:Scale.MajorTickSettings>
+                                        <SyncfusionGauge:TickSettings StartOffset="0.9"
+                                                      EndOffset="0.83"
+                                                      Thickness="2" />
+                                    </SyncfusionGauge:Scale.MajorTickSettings>
+                                    <SyncfusionGauge:Scale.MinorTickSettings>
+                                        <SyncfusionGauge:TickSettings StartOffset="0.9"
+                                                      EndOffset="0.85"
+                                                      Thickness="2" />
+                                    </SyncfusionGauge:Scale.MinorTickSettings>
+                                </SyncfusionGauge:Scale>
+                            </SyncfusionGauge:SfCircularGauge.Scales>
+                        </SyncfusionGauge:SfCircularGauge>
+                    </Grid>
+
                 </Grid>
                 <!-- Load Data -->
 
