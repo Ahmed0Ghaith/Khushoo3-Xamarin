@@ -46,7 +46,7 @@ namespace Khushoo3.Views
                 Total.Text = TotalNum.ToString();
 
             }
-            catch (Exception ex)
+            catch 
             {
 
             }

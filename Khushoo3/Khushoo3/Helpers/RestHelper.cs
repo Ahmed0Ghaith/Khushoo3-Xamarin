@@ -18,7 +18,7 @@ namespace Khushoo3.Helpers
             
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                throw new InternetConnectionException();
+               await App.Current.MainPage.DisplayAlert("خطأ","يوجد خطأ في الاتصال بالانترنت", "غلق");
             }
 
             //Make Http Call

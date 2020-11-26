@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
 using Khushoo3.Helpers;
 using Khushoo3.Models;
 using PanCardView.EventArgs;
@@ -30,8 +32,40 @@ namespace Khushoo3.ViewModel
       
 
         public Command CounterTapped { get; set; }
+     
+
 
         public Command ClosePoP { get; set; }
+
+        private bool _isBusy = true;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
+        private bool _isrefresh = false;
+        public bool isrefresh
+        {
+            get => _isrefresh;
+            set => SetProperty(ref _isrefresh, value);
+        }
+
+
+
+        private string _loadingText = string.Empty;
+        public string LoadingText
+        {
+            get => _loadingText;
+            set => SetProperty(ref _loadingText, value);
+        }
+
+        private bool _dataLoaded = false;
+        public bool DataLoaded
+        {
+            get => _dataLoaded;
+            set => SetProperty(ref _dataLoaded, value);
+        }
 
         private  bool _PopUPZekrPage = false;
         public bool PopUPZekrPage
@@ -68,6 +102,13 @@ namespace Khushoo3.ViewModel
 
        
 
+        private bool _Isupdated = true;
+        public bool Isupdated
+        {
+            get => _Isupdated;
+            set => SetProperty(ref _Isupdated, value);
+        }
+
         private string _Hday;
         public string Hday
         {
@@ -101,23 +142,23 @@ namespace Khushoo3.ViewModel
 
             
                 SalatTime = new ObservableCollection<TodayST>();
-            Azkar = new ObservableCollection<Azkar>();
-
-            AzkarList = new ObservableCollection<IGrouping<string, Azkar>>();
-                Zekr = new Command<IGrouping<string, Azkar>>(Selected);
+                Azkar = new ObservableCollection<Azkar>();
+                AzkarList = new ObservableCollection<IGrouping<string, Azkar>>();
+                Zekr = new Command<IGrouping<string, Azkar>>( Selected);
                 Con = new SQLiteConnection(App.DataBaseLocation);
                 ClosePoP = new Command(Close);
-                ZekrCountr = new Command<PanCardView.EventArgs.ItemAppearedEventArgs>(ZekrTimes);
+        
+                ZekrCountr = new Command<ItemAppearedEventArgs>(ZekrTimes);
                
                 CounterTapped = new Command(CTapped);
-            ZekrList = new zekrinfo();
-                ZekrFilter();
-                _ = LoadSalatData();
-          
+                ZekrList = new zekrinfo();
+              
+                   LoadSalatData();
+                 
 
         }
 
-       
+     
 
         private async void CTapped(object obj)
         {
@@ -128,7 +169,7 @@ namespace Khushoo3.ViewModel
             int count = int.Parse(Button.Text);
             if (count > 0)
             {
-                Button.BorderColor = Color.FromHex("#FFD500");
+            Button.BorderColor = Color.FromHex("#FFD500");
             Button.BorderWidth = 2;
             await Task.Delay(100);
                 Counter = (count - 1).ToString();
@@ -145,7 +186,7 @@ namespace Khushoo3.ViewModel
 
                 }
                
-                catch (Exception ex)
+                catch
                 {
                 
                 }
@@ -232,20 +273,29 @@ namespace Khushoo3.ViewModel
             PopUPZekrPage = false;
            
         }
-        private async void Selected(IGrouping<string, Azkar> obj)
+        private async  void Selected(IGrouping<string, Azkar> obj)
         {
+            LoadingText = "تحميل الذكر";
+            IsBusy = true;
 
+            await Task.Delay(100);
             
+          
+            PopUPZekrPage = true;
+         
 
             Azkar.Clear();
-            PopUPZekrPage = true;
+          
             foreach (var i in obj)
             {
                 Azkar.Add(i);
             }
-          
-          
 
+            IsBusy = false;
+
+         
+
+           
         }
        
 
@@ -253,39 +303,50 @@ namespace Khushoo3.ViewModel
 
         List<string> imgs;
         int ImageNO = 0;
-        public async Task LoadSalatData()
+        public async  void LoadSalatData()
         {
-
-         
-
-            int ImageNO = 0;
-            IsBusy = true;
             DataLoaded = false;
-            IsErrorState = false;
+            IsBusy = true;
             LoadingText = "تحميل مواقيت الصلاة";
+
             try
             {
+                var current = Connectivity.NetworkAccess;
+                
+                
 
-               
-            Con.CreateTable<DBST>();
-            var Table = Con.Table<DBST>().ToList();
+                Con.CreateTable<DBST>();
+                var Table = Con.Table<DBST>().ToList();
+
+                
                 if (Table.Count == 0)
-                { RequstData(); }
+                {
 
-
-
-                var fd = DateTime.Parse(Table[0].Date).ToString("MMM");
-
-                    if (DateTime.Parse(Table[0].Date).ToString("MMM") == DateTime.Now.ToString("MMM"))
+                      await RequstData();
+                }
+              
+                else
+                {
+                    if (DateTime.Parse(Table[0].Date).ToString("MM") != DateTime.Now.ToString("MM"))
                     {
-                     imgs = new List<string>();
-                    imgs.Add("FR");
-                    imgs.Add("SR");
-                    imgs.Add("ZH");
-                    imgs.Add("AS");
-                    imgs.Add("MA");
-                    imgs.Add("IS");
-                    foreach (var t in Table)
+                         await  RequstData();
+                    }
+                }
+
+                Con.CreateTable<DBST>();
+                var table = Con.Table<DBST>().ToList();
+
+
+
+
+                imgs = new List<string>();
+                        imgs.Add("FR");
+                        imgs.Add("SR");
+                        imgs.Add("ZH");
+                        imgs.Add("AS");
+                        imgs.Add("MA");
+                        imgs.Add("IS");
+                        foreach (var t in table)
                         {
 
 
@@ -297,40 +358,36 @@ namespace Khushoo3.ViewModel
 
 
 
-                    }
-                    else
-                    {
-                        LoadingText = "تحديث مواقيت الصلاة";
-                        RequstData();
-                        //   RequstDB(t);
-                    }
-                
+
+
+                ZekrFilter();
+
 
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Alert", ex.Message, "Cancel");
+              await   App.Current.MainPage.DisplayAlert("Alert", ex.Message, "Cancel");
 
             }
             finally
             {
-                IsBusy = false;
                 DataLoaded = true;
-                IsErrorState = true;
+                IsBusy = false;
+         
             }
         
         }
        
         //requst from DB
-        public async void RequstDB(DBST Item)
+        public   void RequstDB(DBST Item)
         {
 
-
-
-            string t = Item.Date;
-            string yn = DateTime.Now.ToString("dd MMM yyyy");
-            if (Item.Date == DateTime.Now.ToString("dd MMM yyyy"))
+         
+            string ItemTime = Convert.ToDateTime(Item.Date).ToString("dd MM yyyy");
+          
+            if (ItemTime == DateTime.Now.ToString("dd MM yyyy"))
                         {
+                
                             if (string.IsNullOrEmpty(Hdate))
                             {
                                 Hdate = Item.HDate;
@@ -354,33 +411,46 @@ namespace Khushoo3.ViewModel
         }
 
        // RequstData And Store it 
-        private async void RequstData()
+        private async Task RequstData()
         {
-            var locator = await Geolocation.GetLocationAsync();
+          
+                LoadingText = "تحديث مواقيت الصلاة";
+                var locator = await Geolocation.GetLocationAsync();
+                if (locator == null)
+                {
+                    var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
 
-            Timestamp = locator.Timestamp;
-            Latitude = locator.Latitude;
-            Longitude = locator.Longitude;
-            //    var dates = DateTime.Now.ToString("MMddyyyy");
-            Con.DeleteAll<DBST>();
-            string Month=   DateTime.Now.ToString("MM");
-              
-            var info = await RestHelper.GetAsync<Root>($"https://api.aladhan.com/v1/calendar?latitude={Latitude}&longitude={Longitude}&method=5&month={Month}&year=2020");
+                    if (status != PermissionStatus.Granted || status == PermissionStatus.Denied)
+                    {
+                        status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
-            salattime = info.data;
+                        await App.Current.MainPage.DisplayAlert("تنبيه", "قم بالسماح للتطبيق بالوصول للموقع لتعيين القبله و مواقيت الصلاه", "غلق");
 
-            foreach (var Item in salattime)
-            {
+                    }
+                }
+                Timestamp = locator.Timestamp;
+                Latitude = locator.Latitude;
+                Longitude = locator.Longitude;
 
-                char[] separator = { '(', ')', ' ' };
-                string Fajr = DateTime.Parse(Item.timings.Fajr.Split(separator)[0]).ToString("hh:mm");
-                string Sunrise = DateTime.Parse(Item.timings.Sunrise.Split(separator)[0]).ToString("hh:mm");
-                string Dhuhr = DateTime.Parse(Item.timings.Dhuhr.Split(separator)[0]).ToString("hh:mm");
-                string Asr = DateTime.Parse(Item.timings.Asr.Split(separator)[0]).ToString("hh:mm");
-                string Maghrib = DateTime.Parse(Item.timings.Maghrib.Split(separator)[0]).ToString("hh:mm");
-                string Isha = DateTime.Parse(Item.timings.Isha.Split(separator)[0]).ToString("hh:mm");
 
-                List<DBST> TS = new List<DBST>()
+                string Month = DateTime.Now.ToString("MM");
+
+                var info = await RestHelper.GetAsync<Root>($"https://api.aladhan.com/v1/calendar?latitude={Latitude}&longitude={Longitude}&method=5&month={Month}&year={DateTime.Now.Year}&adjustment=1");
+                Con.DeleteAll<DBST>();
+                salattime = info.data;
+               
+                foreach (var Item in salattime)
+                {
+
+                    char[] separator = { '(', ')', ' ' };
+                    string Fajr = DateTime.Parse(Item.timings.Fajr.Split(separator)[0]).ToString("hh:mm");
+                    string Sunrise = DateTime.Parse(Item.timings.Sunrise.Split(separator)[0]).ToString("hh:mm");
+                    string Dhuhr = DateTime.Parse(Item.timings.Dhuhr.Split(separator)[0]).ToString("hh:mm");
+                    string Asr = DateTime.Parse(Item.timings.Asr.Split(separator)[0]).ToString("hh:mm");
+                    string Maghrib = DateTime.Parse(Item.timings.Maghrib.Split(separator)[0]).ToString("hh:mm");
+                    string Isha = DateTime.Parse(Item.timings.Isha.Split(separator)[0]).ToString("hh:mm");
+
+                    List<DBST> TS = new List<DBST>()
 
                 {
                     new DBST{Salat ="صلاة الفجر" , Time= Fajr ,Date =Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
@@ -391,17 +461,19 @@ namespace Khushoo3.ViewModel
                     new DBST{Salat ="صلاة العشاء" , Time= Isha,Date =Item.date.readable ,Day=Item.date.hijri.day ,Month = Item.date.hijri.month.ar,HDate=Item.date.hijri.date},
                 };
 
-                foreach (var item in TS)
-                {
-                    Con.Insert(item);
+                    foreach (var item in TS)
+                    {
+                        Con.Insert(item);
 
 
+                    }
                 }
-            }
-          
-            LoadSalatData();
+
+              
 
 
+            
+           
         }
     }
 }

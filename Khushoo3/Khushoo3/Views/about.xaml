@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Khushoo3.Views.about" BackgroundColor="#1f1f1f">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" >
+            <Label Text="حول التطبيق " FontSize="18" FontFamily="KufiFontBold"
+                VerticalOptions="StartAndExpand" 
+                   Margin="30" TextColor="Wheat"
+                HorizontalOptions="CenterAndExpand" />
+            <Label  HorizontalTextAlignment="End" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Wheat" LineHeight="1.5"
+                    
+                Text="تطبيق خشوع هو تطبيق اسلامي مفتوح المصدر اذا كنت مطور يمكنك مشاركه رأيك او التعديل والعمل عليه مع ذكر المصدر "/>
+            <Label Text="عن المطور  " FontSize="16" FontFamily="KufiFontBold"
+                VerticalOptions="StartAndExpand" 
+                   Margin="10" TextColor="Gray"
+                HorizontalOptions="EndAndExpand" />
+            <Image HeightRequest="100" Aspect="AspectFit" Source="AG" HorizontalOptions="CenterAndExpand" />
+
+            <Label  HorizontalTextAlignment="End" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Wheat" LineHeight="1.5"                    
+                Text="تم تطوير هذا التطبيق في نسخته  الاولي عام 2020   "/>
+            <Label  HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Gray" LineHeight="1.5"       
+                Text=" يمكنك التواصل ومتابعه مطور التطبيق عن طريق  "/>
+            <Grid Margin="10" ColumnSpacing="10" ColumnDefinitions="*,*,*,*" RowDefinitions="50" >
+                <Frame CornerRadius="20" Padding="5" >
+                    <Image HeightRequest="40" Source="icons8facebook"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizerf"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame Grid.Column="1" CornerRadius="20" Padding="5" >
+                    <Image HeightRequest="40" Source="icons8whatsapp"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizerw"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame Grid.Column="2" CornerRadius="20" Padding="5" >
+                    <Image HeightRequest="40" Source="icons8twitter"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizert"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame Grid.Column="3" CornerRadius="20" Padding="5" >
+                    <Image HeightRequest="40" Source="icons8youtube"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizery"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </Grid>
+            <Label HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" FontSize="14"  Margin="20" TextColor="Gray" LineHeight="1.5"      Text="هذا التطبيق صدقه جاريه علي ارواح جميع المسلمين نسألكم الفاتحه"/>
+        </StackLayout>
+    
+    </ContentPage.Content>
+</ContentPage>

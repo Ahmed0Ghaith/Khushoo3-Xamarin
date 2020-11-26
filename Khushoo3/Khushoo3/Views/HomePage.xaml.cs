@@ -6,6 +6,7 @@ using System.Reflection;
 using Khushoo3.Models;
 using Khushoo3.ViewModel;
 using Newtonsoft.Json;
+
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,6 +15,8 @@ namespace Khushoo3.Views
 {
     public partial class HomePage : ContentPage
     {
+        HomePageVM VM;
+
         double current_latitude = 0;
         double current_longitude = 0;
         double QiblaLatitude = 21.4224779;
@@ -24,19 +27,36 @@ namespace Khushoo3.Views
         {
 
             InitializeComponent();
+          this.BindingContext=  VM  = new HomePageVM();
             Compass.ReadingChanged += Compass_ReadingChanged;
-           
+            
+
+        }
+      
+        protected override bool OnBackButtonPressed()
+        {
+
+
+            if (VM.PopUPZekrPage)
+            {
+                VM.PopUPZekrPage = false;
+
+                return true;
+            }
+            else
+            { 
+              return  base.OnBackButtonPressed();
+
+            }
+
+
 
         }
       
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-          
+      
 
-        }
-
-        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        private void SearchIconTapped(object sender, EventArgs e)
         {
             
             OpenMenu();
@@ -67,26 +87,42 @@ namespace Khushoo3.Views
             search.IsVisible = false;
         }
 
-        private void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        
+
+
+        public void ChangeColor(object obj)
         {
+            Zekr.TextColor = Color.FromHex("#FFD500");
+            Qibla.TextColor = Color.FromHex("#FFD500");
+            Counter.TextColor = Color.FromHex("#FFD500");
+
+            var lable = obj as Label;
+            lable.TextColor = Color.FloralWhite;
+
 
         }
 
-      
-
         private void ZekrTabbed(object sender, EventArgs e)
         {
+            ChangeColor(sender);
+            SearchIcon.IsVisible = true;
 
             AzkarView.IsVisible = true;
             QiblaView.IsVisible = false;
             CounterView.IsVisible = false;
+            Action<double> callback = input => AzkarView.TranslationX = input;
+            AzkarView.Animate("anim", callback, 300, 0, 16, 300, Easing.CubicInOut);
         }
 
         private void CounterTapped(object sender, EventArgs e)
         {
+            ChangeColor(sender);
+            SearchIcon.IsVisible = false;
             CounterView.IsVisible = true;
             AzkarView.IsVisible = false;
             QiblaView.IsVisible = false;
+            Action<double> callback = input => CounterView.TranslationX = input;
+            CounterView.Animate("anim", callback, 300, 0, 16, 300, Easing.CubicInOut);
         }
 
 
@@ -94,11 +130,16 @@ namespace Khushoo3.Views
 
         private void QiblaTabbed(object sender, EventArgs e)
         {
+            ChangeColor(sender);
             QiblaIsAppear();
+            SearchIcon.IsVisible = false;
+
             QiblaView.IsVisible = true;
            
             AzkarView.IsVisible = false;
             CounterView.IsVisible = false;
+            Action<double> callback = input => QiblaView.TranslationX = input;
+            QiblaView.Animate("anim", callback, 300, 0, 16, 300, Easing.CubicInOut);
         }
         private void QiblaIsAppear()
         {
@@ -107,8 +148,6 @@ namespace Khushoo3.Views
 
             if (!Compass.IsMonitoring) Compass.Start(speed);
             GetLocation();
-
-          
             PointToQibla();
             if (!Compass.IsMonitoring) Compass.Start(speed);
 
@@ -139,7 +178,7 @@ namespace Khushoo3.Views
 
 
                         }
-                        catch (Exception ex)
+                        catch 
                         {
 
                         }
@@ -182,5 +221,9 @@ namespace Khushoo3.Views
             pointer1.Value = bearing_degree;
         }
 
+        private void TapGestureRecognizer_Tapped_3(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new about());
+        }
     }
 }

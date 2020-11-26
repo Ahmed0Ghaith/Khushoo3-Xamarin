@@ -24,9 +24,10 @@ namespace Khushoo3
         public App(string _DataBaseLocation)
         {
             InitializeComponent();
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUyNjcwQDMxMzgyZTMzMmUzMFdRenV1RUwyL1ZuVzdtNk9QL1l5bFJrZDZuV2gyNHNLWHAza1hZVUtFZGc9");
             DataBaseLocation = _DataBaseLocation;
 
-            MainPage = new HomePage();
+            MainPage = new NavigationPage(new HomePage());
             
         }
 

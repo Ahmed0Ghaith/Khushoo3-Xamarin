@@ -19,13 +19,14 @@ namespace Khushoo3.ViewModel
             get => _Timestamp;
             set => SetProperty(ref _Timestamp, value);
         }
-        public static double _Latitude;
-        public  double Latitude
+    
+        public  double _Latitude = 30.0456926;
+        public double Latitude 
         {
             get => _Latitude;
             set => SetProperty(ref _Latitude, value);
         }
-        public static double _Longitude;
+        public  double _Longitude = 31.2648738;
         public double Longitude
         {
             get => _Longitude;
@@ -41,26 +42,7 @@ namespace Khushoo3.ViewModel
         }
 
 
-    private bool _isBusy = false;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set => SetProperty(ref _isBusy, value);
-        }
-
-        private string _loadingText = string.Empty;
-        public string LoadingText
-        {
-            get => _loadingText;
-            set => SetProperty(ref _loadingText, value);
-        }
-
-        private bool _dataLoaded = false;
-        public bool DataLoaded
-        {
-            get => _dataLoaded;
-            set => SetProperty(ref _dataLoaded, value);
-        }
+  
 
         private bool _isErrorState = false;
         public bool IsErrorState
@@ -84,26 +66,20 @@ namespace Khushoo3.ViewModel
         }
 
 
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged(string PropertyName)
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            var changed = PropertyChanged;
 
+            if (changed == null)
+                return;
 
+            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //    protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        //    {
-        //        var changed = PropertyChanged;
-
-        //        if (changed == null)
-        //            return;
-
-        //        changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //    }
 
         protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
         {

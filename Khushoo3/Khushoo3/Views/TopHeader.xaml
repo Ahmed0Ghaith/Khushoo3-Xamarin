@@ -2,7 +2,10 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:viewModel="clr-namespace:Khushoo3.ViewModel"
+            
+             
             x:Class="Khushoo3.Views.TopHeader">
+    
     <ContentView>
 
         <ContentView.BindingContext>

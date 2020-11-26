@@ -70,7 +70,7 @@ namespace Khushoo3.ViewModel
           
             foreach (var item in Category)
             {
-                //  CatList.Add(item.Key);
+               
                 AzkarList.Add(item);
             }
         

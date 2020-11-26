@@ -4,23 +4,24 @@
              x:Class="Khushoo3.Views.HomePage"
            xmlns:Views="clr-namespace:Khushoo3.Views"
              xmlns:VM="clr-namespace:Khushoo3.ViewModel" 
-             xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+       
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" 
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView" xmlns:SyncfusionGauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+             FlowDirection="RightToLeft"
+             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:SyncfusionGauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
              BackgroundImageSource="Background"
-         BackgroundColor="#FFFFFF">
-    <!--   BackgroundImageSource="Background.png" -->
-    <!--  Binding context for Home page  -->
+            BackgroundColor="#FFFFFF">
+  
 
-    <ContentPage.BindingContext>
-        <VM:HomePageVM/>
-    </ContentPage.BindingContext>
+   
     
     <ContentPage.Content>
-        <Grid>
-            <Grid
+       
+        <Grid >
+           
+                <Grid IsEnabled="{Binding DataLoaded }"
          
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand"
@@ -28,111 +29,125 @@
         ColumnSpacing="0"
         Padding="0">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{OnPlatform iOS=50, Android=50}" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{OnPlatform iOS=50, Android=50}" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <!-- Pager Header Top -->
-                <Grid Grid.Row="0" >
-                    <Views:TopHeader/>
-                </Grid>
-                <!--Content-->
-                <StackLayout
+                    <!-- Pager Header Top -->
+                    <Grid Grid.Row="0" >
+                        <Views:TopHeader/>
+                    </Grid>
+                    <!--Content-->
+                    <StackLayout
                   Grid.Row="1"
                   HorizontalOptions="FillAndExpand"
                   VerticalOptions="FillAndExpand">
 
-                    <StackLayout>
-                        <!--Slider-->
-                        <Views:SalatTimeSlider  Margin="0,0,0,10"/>
-                        <StackLayout BackgroundColor="Black"  >
-                            <Grid RowDefinitions="50"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
-                            <Grid IsVisible="true"  ColumnDefinitions="auto,*,*,*,*"   >
-                                  
-                                    <Label Grid.Column="4"  x:Name="Zekr" HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ZekrTabbed" NumberOfTapsRequired="1" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <Label  x:Name="Counter" Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}" >
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="CounterTapped" NumberOfTapsRequired="1" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
+                        <StackLayout>
+                            <!--Slider-->
+                        <RefreshView
+                            
+                            
+                 HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+             Command="{Binding Refresh}"
+               IsRefreshing="{Binding isrefresh }"
+               >
+                            <Views:SalatTimeSlider  Margin="0,0,0,10"/>
+                        </RefreshView>
+                        <!--Menu-->
+                            <StackLayout BackgroundColor="Black"  >
+                                <Grid RowDefinitions="50"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50"  Opacity="0.7" >
+                                    <Grid IsVisible="true"  ColumnDefinitions="auto,*,*,*,*"   >
 
-                                    <Label x:Name="Qibla" Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <Label Grid.Column="1"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأعدادات" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}"/>
-                                <Image Grid.Column="0" Margin="2" WidthRequest="30" HorizontalOptions="Center" Source="SearchIcon" VerticalOptions="Center" >
-                                    <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"  />
-                                    </Image.GestureRecognizers>
-                                </Image>
+                                        <Label Grid.Column="1"  x:Name="Zekr" HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="الأذكار" VerticalOptions="Center" FontSize="15" TextColor="FloralWhite">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ZekrTabbed" NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label  x:Name="Counter" Grid.Column="2"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="السبحة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="CounterTapped" NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
 
-                                </Grid>
-                               
-                                <Grid x:Name="search"  BackgroundColor="#1f1f1f"  ColumnDefinitions="auto,*" IsVisible="false">
-
-                                    <Image x:Name="CloseImage" HorizontalOptions="Center" Grid.Column="0" HeightRequest="30" Source="BackSearch" >
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OverlayTapped"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-
-                                    <Grid   Grid.Column="1"  x:Name="SearchZekr" WidthRequest="340" 
-                                                 HorizontalOptions="EndAndExpand" BackgroundColor="#1f1f1f" Opacity="0.9"  >
-
-                                        <Entry Text="{Binding SearchZekr}" Placeholder="بحث" PlaceholderColor="LightGray" FontFamily="TajawalFont"   Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f"   HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="End" />
+                                        <Label x:Name="Qibla" Grid.Column="3"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="القبلة" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="QiblaTabbed" NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Label x:Name="Setting" Grid.Column="4"  HorizontalTextAlignment="Center" FontFamily="TajawalFont" Text="التطبيق" VerticalOptions="Center" FontSize="15" TextColor="{StaticResource Golden}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_3" NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <Image x:Name="SearchIcon" Grid.Column="0" Margin="7,0" WidthRequest="30" HorizontalOptions="Center" Source="SearchIcon" VerticalOptions="Center" >
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="SearchIconTapped"  />
+                                            </Image.GestureRecognizers>
+                                        </Image>
 
                                     </Grid>
-                                    
+
+                                    <Grid x:Name="search"  BackgroundColor="#1f1f1f"  ColumnDefinitions="auto,*" IsVisible="false">
+
+                                        <Image x:Name="CloseImage" HorizontalOptions="Center" Margin="7,0" Grid.Column="0" HeightRequest="30" Source="BackSearch" >
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OverlayTapped"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+
+                                        <StackLayout   Grid.Column="1"  x:Name="SearchZekr" WidthRequest="340" 
+                                                 HorizontalOptions="EndAndExpand" BackgroundColor="#1f1f1f" Opacity="0.9"  >
+
+                                            <Entry Text="{Binding SearchZekr}" Placeholder="بحث" PlaceholderColor="LightGray" FontFamily="TajawalFont"   Margin="2" TextColor="Wheat" BackgroundColor="#1f1f1f"   HorizontalOptions="FillAndExpand" FlowDirection="RightToLeft"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="Start" />
+
+                                        </StackLayout>
+
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </StackLayout>
+
                         </StackLayout>
-                      
+
                     </StackLayout>
 
-                </StackLayout>
+                    <!--AzkarPage-->
+                    <StackLayout Grid.Row="2" x:Name="AzkarView"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Views:AzkarPage/>
+                    </StackLayout>
 
-                <!--AzkarPage-->
-                <StackLayout Grid.Row="2" x:Name="AzkarView"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Views:AzkarPage/>
-                </StackLayout>
-               
-                <!--CounterView-->
-                <Grid Grid.Row="2"  x:Name="CounterView" IsVisible="false" >
-                    <Views:Counter/>
-                </Grid>
-                
-                <!--QiblaView-->
-                <Grid Grid.Row="2"  x:Name="QiblaView" IsVisible="false" >
-                    <Grid Padding="20" x:Name="Window"  BackgroundColor="Transparent">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Frame  Margin="20"  HorizontalOptions="Center" Padding="0" HeightRequest="55"
+                    <!--CounterView-->
+                    <Grid Grid.Row="2"  x:Name="CounterView" IsVisible="false" >
+                        <Views:Counter/>
+                    </Grid>
+
+                    <!--QiblaView-->
+                    <Grid Grid.Row="2"  x:Name="QiblaView" IsVisible="false" >
+                        <Grid Padding="20" x:Name="Window"  BackgroundColor="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Frame  Margin="20"  HorizontalOptions="Center" Padding="0" HeightRequest="55"
                    WidthRequest="55"
                      CornerRadius="50"
                      BackgroundColor="#f1f1f1">
-                            <Image   Source="qibla"
+                                <Image   Source="qibla"
                    HeightRequest="50"
                     
                    WidthRequest="50"
                HorizontalOptions="CenterAndExpand" />
-                        </Frame>
-                        <SyncfusionGauge:SfCircularGauge Grid.Row="1"
+                            </Frame>
+                            <SyncfusionGauge:SfCircularGauge Grid.Row="1"
                                          x:Name="circularGauge"
                                          BackgroundColor="Transparent"
                                          HorizontalOptions="CenterAndExpand"
                                          VerticalOptions="CenterAndExpand">
-                            <SyncfusionGauge:SfCircularGauge.Scales>
-                                <SyncfusionGauge:Scale x:Name="scale"
+                                <SyncfusionGauge:SfCircularGauge.Scales>
+                                    <SyncfusionGauge:Scale x:Name="scale"
                                        StartAngle="270"
                                        StartValue="0"
                                        EndValue="360"
@@ -144,62 +159,87 @@
                                        ScaleStartOffset="0.99"
                                        ScaleEndOffset="0.9"
                                        >
-                                    <SyncfusionGauge:Scale.Pointers>
+                                        <SyncfusionGauge:Scale.Pointers>
 
-                                        <SyncfusionGauge:NeedlePointer x:Name="pointer1"
+                                            <SyncfusionGauge:NeedlePointer x:Name="pointer1"
                                                        Type="Triangle"
                                                        LengthFactor="0.65"
                                                        KnobColor="White"
                                                        Thickness="25"
                                                            
                                                        EnableAnimation="True">
-                                            <SyncfusionGauge:NeedlePointer.KnobRadius>
-                                                <OnPlatform x:TypeArguments="x:Double">
-                                                    <On Platform="Android"
+                                                <SyncfusionGauge:NeedlePointer.KnobRadius>
+                                                    <OnPlatform x:TypeArguments="x:Double">
+                                                        <On Platform="Android"
                                         Value="25" />
-                                                    <On Platform="iOS"
+                                                        <On Platform="iOS"
                                         Value="25" />
-                                                </OnPlatform>
-                                            </SyncfusionGauge:NeedlePointer.KnobRadius>
-                                        </SyncfusionGauge:NeedlePointer>
-                                    </SyncfusionGauge:Scale.Pointers>
-                                    <SyncfusionGauge:Scale.MajorTickSettings>
-                                        <SyncfusionGauge:TickSettings StartOffset="0.9"
+                                                    </OnPlatform>
+                                                </SyncfusionGauge:NeedlePointer.KnobRadius>
+                                            </SyncfusionGauge:NeedlePointer>
+                                        </SyncfusionGauge:Scale.Pointers>
+                                        <SyncfusionGauge:Scale.MajorTickSettings>
+                                            <SyncfusionGauge:TickSettings StartOffset="0.9"
                                                       EndOffset="0.83"
                                                       Thickness="2" />
-                                    </SyncfusionGauge:Scale.MajorTickSettings>
-                                    <SyncfusionGauge:Scale.MinorTickSettings>
-                                        <SyncfusionGauge:TickSettings StartOffset="0.9"
+                                        </SyncfusionGauge:Scale.MajorTickSettings>
+                                        <SyncfusionGauge:Scale.MinorTickSettings>
+                                            <SyncfusionGauge:TickSettings StartOffset="0.9"
                                                       EndOffset="0.85"
                                                       Thickness="2" />
-                                    </SyncfusionGauge:Scale.MinorTickSettings>
-                                </SyncfusionGauge:Scale>
-                            </SyncfusionGauge:SfCircularGauge.Scales>
-                        </SyncfusionGauge:SfCircularGauge>
+                                        </SyncfusionGauge:Scale.MinorTickSettings>
+                                    </SyncfusionGauge:Scale>
+                                </SyncfusionGauge:SfCircularGauge.Scales>
+                            </SyncfusionGauge:SfCircularGauge>
+                        </Grid>
+
                     </Grid>
 
+
+
+
                 </Grid>
-                <!-- Load Data -->
 
-
-                <!-- Busy Indicator -->
-
-            </Grid>
-            <Grid 
+                <!-- PopUPZekr -->
+                <Grid 
                 
                 
                 x:Name="PopUPZekr"   IsVisible="{Binding PopUPZekrPage}" >
-                <BoxView BackgroundColor="#1f1f1f" Opacity="0.6" >
-                    
-                </BoxView>
-                <Views:AzkarPoPUP  />
+                    <BoxView BackgroundColor="#1f1f1f" Opacity="0.6" >
 
-              
-            </Grid>
+                    </BoxView>
+                    <Views:AzkarPoPUP  />
 
-         
-            </Grid>
+
+                </Grid>
+
+                <!-- Busy Indicator -->
+                <StackLayout 
+           
+           IsVisible="{Binding IsBusy, Mode=OneWay}"
+            Spacing="12"
+            BackgroundColor="Transparent"
+            Padding="8,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+                    <ActivityIndicator 
+                IsRunning="True"
+                Color="LightGray"
+                WidthRequest="30"
+                HeightRequest="30" />
+
+                    <Label 
+                Text="{Binding LoadingText, Mode=OneWay}"
+                HorizontalOptions="Center"
+                TextColor="Gray"
+                HorizontalTextAlignment="Center" />
+
+                </StackLayout>
         
+        </Grid>
+
+
       
     </ContentPage.Content>
 </ContentPage>

@@ -2,15 +2,15 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:VM="clr-namespace:Khushoo3.ViewModel"
-               xmlns:cv="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+                             FlowDirection="LeftToRight"
+
+             
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" 
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
              x:Class="Khushoo3.Views.AzkarPoPUP">
-    <!--<ContentView.BindingContext>
-        <VM:AzkarViewModel/>
-    </ContentView.BindingContext>-->
+    
     <ContentView.Resources>
             <ResourceDictionary>
                 <Style x:Key="ActiveIndicator" TargetType="Frame">
@@ -37,7 +37,9 @@
             <cards:CarouselView
                    IsViewReusingEnabled="False"
                    IsCyclical="False"
+                FlowDirection="LeftToRight"
             
+              
                 
                 ItemsSource="{Binding Azkar }"
                 ItemAppearedCommand="{Binding Source={RelativeSource AncestorType={x:Type VM:HomePageVM}}, Path=ZekrCountr}"
@@ -60,11 +62,11 @@
                             </BoxView>
                             <Frame Margin="30,40,30,50" BackgroundColor="#1f1f1f" Opacity="0.9" HorizontalOptions="FillAndExpand" BorderColor="{StaticResource Golden}"  VerticalOptions="FillAndExpand" CornerRadius="20">
                                 <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Label LineHeight="0.8" LineBreakMode="WordWrap"  Margin="0,20,0,20" Text="{Binding category}" HorizontalOptions="CenterAndExpand" FontFamily="TajawalFontBold"  TextColor="{StaticResource Golden}" FontSize="20" />
-                                        <Label LineHeight="1.3" LineBreakMode="WordWrap" Margin="0,10,0,20" Text="{Binding zekr}"  HorizontalOptions="CenterAndExpand" FontFamily="TajawalFont" TextColor="{StaticResource LightTextColor}"  FontSize="18" />
-                                        <Label LineHeight="0.9" LineBreakMode="WordWrap" Margin="0,10,0,20"  Text="{Binding reference}"  HorizontalOptions="EndAndExpand" FontFamily="TajawalFont" TextColor="Gray"  FontSize="16" />
-                                        <Label LineHeight="1" LineBreakMode="WordWrap" Margin="0,10,0,20" Text="{Binding description}"  HorizontalOptions="CenterAndExpand" FontFamily="TajawalFont" TextColor="Wheat"  FontSize="16" />
+                                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                                        <Label LineHeight="0.8" LineBreakMode="WordWrap" HorizontalTextAlignment="Center" Margin="0,20,0,20" Text="{Binding category}" HorizontalOptions="CenterAndExpand" FontFamily="TajawalFontBold"  TextColor="{StaticResource Golden}" FontSize="20" />
+                                        <Label LineHeight="1.3" LineBreakMode="WordWrap" HorizontalTextAlignment="Center" Margin="0,10,0,20" Text="{Binding zekr}"  HorizontalOptions="CenterAndExpand" FontFamily="TajawalFont" TextColor="{StaticResource LightTextColor}"  FontSize="18" />
+                                        <Label LineHeight="0.9" LineBreakMode="WordWrap" HorizontalTextAlignment="Center" Margin="0,10,0,20"  Text="{Binding reference}"  HorizontalOptions="EndAndExpand" FontFamily="TajawalFont" TextColor="Gray"  FontSize="16" />
+                                        <Label LineHeight="1" LineBreakMode="WordWrap"   HorizontalTextAlignment="Center" Margin="0,10,0,20" Text="{Binding description}"  HorizontalOptions="CenterAndExpand" FontFamily="TajawalFont" TextColor="Wheat"  FontSize="16" />
 
                                     </StackLayout>
                                 </ScrollView>
@@ -80,7 +82,6 @@
                 <controls:IndicatorsControl 
                   
              Spacing="2.5"
-               
                     HidesForSingleIndicator="False"
                     SelectedIndicatorStyle="{StaticResource ActiveIndicator}"
           UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
