@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace Khushoo3.Droid
 {
-    [Activity(Label = "Khushoo3", Theme = "@style/MainTheme",   ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Khushoo3", MainLauncher = true, Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,7 +24,7 @@ namespace Khushoo3.Droid
 
             base.OnCreate(savedInstanceState);
             DependencyService.Register<Toast>();
-      
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CardsViewRenderer.Preserve();
@@ -32,7 +32,7 @@ namespace Khushoo3.Droid
             string FolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string FullPath = Path.Combine(FolderPath, DataBaseName);
             LoadApplication(new App(FullPath));
-        
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

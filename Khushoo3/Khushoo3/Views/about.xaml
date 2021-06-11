@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Khushoo3.Views.about" BackgroundColor="#1f1f1f">
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" >
             <Label Text="حول التطبيق " FontSize="18" FontFamily="KufiFontBold"
                 VerticalOptions="StartAndExpand" 
@@ -11,12 +12,22 @@
             <Label  HorizontalTextAlignment="End" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Wheat" LineHeight="1.5"
                     
                 Text="تطبيق خشوع هو تطبيق اسلامي مفتوح المصدر اذا كنت مطور يمكنك مشاركه رأيك او التعديل والعمل عليه مع ذكر المصدر "/>
+            <Label Text="سياسة الاستخدام والخصوصية" FontSize="16" FontFamily="KufiFontBold"
+                VerticalOptions="StartAndExpand" 
+                   Margin="10" TextColor="Gray"
+                HorizontalOptions="EndAndExpand" />
+            <Label  HorizontalTextAlignment="End" VerticalOptions="StartAndExpand" FontFamily="KufiFont"  FontSize="12"  Margin="20" TextColor="LightGray" LineHeight="1"
+                    
+                Text="ما البيانات الشخصية التي نجمعها ولماذا نجمعها
+
+لا نجمع عنك اي بيانات فقط يتطلب التطبيق سماحيه الوصول للموقع لتحديد مواقيت الصلاه في بلدتك والبوصله لتحديد القبله.
+
+للتوصل معنا devghaith@outlook.com "/>
             <Label Text="عن المطور  " FontSize="16" FontFamily="KufiFontBold"
                 VerticalOptions="StartAndExpand" 
                    Margin="10" TextColor="Gray"
                 HorizontalOptions="EndAndExpand" />
             <Image HeightRequest="100" Aspect="AspectFit" Source="AG" HorizontalOptions="CenterAndExpand" />
-
             <Label  HorizontalTextAlignment="End" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Wheat" LineHeight="1.5"                    
                 Text="تم تطوير هذا التطبيق في نسخته  الاولي عام 2020   "/>
             <Label  HorizontalTextAlignment="Center" VerticalOptions="StartAndExpand" FontFamily="KufiFontBold"  FontSize="14"  Margin="20" TextColor="Gray" LineHeight="1.5"       
@@ -49,6 +60,6 @@
             </Grid>
             <Label HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" FontSize="14"  Margin="20" TextColor="Gray" LineHeight="1.5"      Text="هذا التطبيق صدقه جاريه علي ارواح جميع المسلمين نسألكم الفاتحه"/>
         </StackLayout>
-    
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

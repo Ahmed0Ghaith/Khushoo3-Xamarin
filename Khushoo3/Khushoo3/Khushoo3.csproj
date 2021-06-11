@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Com.OneSignal" Version="3.10.6" />
     <PackageReference Include="Plugin.LocalNotification" Version="5.1.1" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="18.3.0.50" />

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218053247432",
+    "firebase_url": "https://khushoo3.firebaseio.com",
+    "project_id": "khushoo3",
+    "storage_bucket": "khushoo3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218053247432:android:1d37f80b8033569d4e80fd",
+        "android_client_info": {
+          "package_name": "com.Ghaith.khushoo3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218053247432-pqmv1bdkc8p32okc1bmjm16ol73if5bu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbzBNOixPS78T9cBih442xu8vq3S88deU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218053247432-pqmv1bdkc8p32okc1bmjm16ol73if5bu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

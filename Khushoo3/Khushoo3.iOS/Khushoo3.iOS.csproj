@@ -130,6 +130,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Com.OneSignal">
+      <Version>3.10.6</Version>
+    </PackageReference>
     <PackageReference Include="PanCardView">
       <Version>1.0.0</Version>
     </PackageReference>

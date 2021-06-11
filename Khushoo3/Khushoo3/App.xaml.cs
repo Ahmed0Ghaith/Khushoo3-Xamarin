@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Com.OneSignal;
+using Com.OneSignal.Abstractions;
 using Khushoo3.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,6 +23,7 @@ namespace Khushoo3
             InitializeComponent();
 
             MainPage = new HomePage();
+
         }
         public App(string _DataBaseLocation)
         {
@@ -28,7 +32,15 @@ namespace Khushoo3
             DataBaseLocation = _DataBaseLocation;
 
             MainPage = new NavigationPage(new HomePage());
-            
+            OneSignal.Current.StartInit("7c5596e3-dc13-4815-a50c-a44754067e37")
+ .Settings(new Dictionary<string, bool>() {
+    { IOSSettings.kOSSettingsKeyAutoPrompt, false },
+    { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
+ .InFocusDisplaying(OSInFocusDisplayOption.Notification)
+ .EndInit();
+
+            OneSignal.Current.RegisterForPushNotifications();
+
         }
 
         protected override void OnStart()

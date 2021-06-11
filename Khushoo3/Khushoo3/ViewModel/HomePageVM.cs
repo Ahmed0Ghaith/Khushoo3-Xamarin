@@ -21,18 +21,18 @@ namespace Khushoo3.ViewModel
     {
         zekrinfo ZekrList;
         public ObservableCollection<IGrouping<string, Azkar>> AzkarList { get; set; }
-      
+
 
         public ObservableCollection<TodayST> SalatTime { get; set; }
         public ObservableCollection<Azkar> Azkar { get; set; }
-     
+
         public Command<IGrouping<string, Azkar>> Zekr { get; set; }
 
         public Command<PanCardView.EventArgs.ItemAppearedEventArgs> ZekrCountr { get; set; }
-      
+
 
         public Command CounterTapped { get; set; }
-     
+
 
 
         public Command ClosePoP { get; set; }
@@ -67,13 +67,13 @@ namespace Khushoo3.ViewModel
             set => SetProperty(ref _dataLoaded, value);
         }
 
-        private  bool _PopUPZekrPage = false;
+        private bool _PopUPZekrPage = false;
         public bool PopUPZekrPage
         {
             get => _PopUPZekrPage;
             set => SetProperty(ref _PopUPZekrPage, value);
         }
-       
+
 
 
         private List<Datum> _salattime;
@@ -94,13 +94,14 @@ namespace Khushoo3.ViewModel
         public string SearchZekr
         {
             get { return _SearchZekr; }
-            set {
+            set
+            {
                 _SearchZekr = value;
                 Search();
             }
         }
 
-       
+
 
         private bool _Isupdated = true;
         public bool Isupdated
@@ -135,46 +136,47 @@ namespace Khushoo3.ViewModel
         }
 
         readonly SQLiteConnection Con;
-  
-    
-         public  HomePageVM()
+
+
+        public HomePageVM()
         {
 
-            
-                SalatTime = new ObservableCollection<TodayST>();
-                Azkar = new ObservableCollection<Azkar>();
-                AzkarList = new ObservableCollection<IGrouping<string, Azkar>>();
-                Zekr = new Command<IGrouping<string, Azkar>>( Selected);
-                Con = new SQLiteConnection(App.DataBaseLocation);
-                ClosePoP = new Command(Close);
-        
-                ZekrCountr = new Command<ItemAppearedEventArgs>(ZekrTimes);
-               
-                CounterTapped = new Command(CTapped);
-                ZekrList = new zekrinfo();
-              
-                   LoadSalatData();
-                 
+
+            SalatTime = new ObservableCollection<TodayST>();
+            Azkar = new ObservableCollection<Azkar>();
+            AzkarList = new ObservableCollection<IGrouping<string, Azkar>>();
+            Zekr = new Command<IGrouping<string, Azkar>>(Selected);
+            Con = new SQLiteConnection(App.DataBaseLocation);
+            ClosePoP = new Command(Close);
+
+            ZekrCountr = new Command<ItemAppearedEventArgs>(ZekrTimes);
+
+            CounterTapped = new Command(CTapped);
+            ZekrList = new zekrinfo();
+
+            LoadSalatData();
+
 
         }
 
-     
+
 
         private async void CTapped(object obj)
         {
-           
+
             var Button = obj as Button;
-          
-        
+
+
             int count = int.Parse(Button.Text);
             if (count > 0)
             {
-            Button.BorderColor = Color.FromHex("#FFD500");
-            Button.BorderWidth = 2;
-            await Task.Delay(100);
+                Button.BorderColor = Color.FromHex("#FFD500");
+                Button.BorderWidth = 2;
+                await Task.Delay(100);
                 Counter = (count - 1).ToString();
-              
-            } else if (count == 0)
+
+            }
+            else if (count == 0)
 
             {
                 try
@@ -185,14 +187,14 @@ namespace Khushoo3.ViewModel
 
 
                 }
-               
+
                 catch
                 {
-                
+
                 }
             }
             Button.BorderColor = Color.FromHex("#ffed94");
-        
+
 
         }
 
@@ -203,7 +205,7 @@ namespace Khushoo3.ViewModel
             if (!string.IsNullOrEmpty(Item.count))
             {
                 Count = Item.count;
-                
+
             }
             Counter = Count;
 
@@ -213,41 +215,41 @@ namespace Khushoo3.ViewModel
         {
             AzkarList.Clear();
             IEnumerable<IGrouping<string, Azkar>> Category;
-          if (!string.IsNullOrEmpty(SearchZekr))
-          {
+            if (!string.IsNullOrEmpty(SearchZekr))
+            {
 
 
-                var list = ZekrList.Azkar.ToList();
-            Category = from p in list
-                                                                 group p by p.category
-                                                                 into G
-                                                                 where G.Key.Contains(SearchZekr)
-                                                                 select G;
-          }
-          else
-          {
                 var list = ZekrList.Azkar.ToList();
                 Category = from p in list
-                                                                 group p by p.category
+                           group p by p.category
+                                                                     into G
+                           where G.Key.Contains(SearchZekr)
+                           select G;
+            }
+            else
+            {
+                var list = ZekrList.Azkar.ToList();
+                Category = from p in list
+                           group p by p.category
                                                                  into G
 
-                                                                 select G;
+                           select G;
 
-              
 
-          }
-     
+
+            }
+
             foreach (var item in Category)
-                {
+            {
 
-                    AzkarList.Add(item);
-                }
-            
+                AzkarList.Add(item);
+            }
+
 
         }
         void ZekrFilter()
         {
-            
+
 
 
             ZekrList = GetAzkar.GetJsonData();
@@ -260,7 +262,7 @@ namespace Khushoo3.ViewModel
 
             foreach (var item in Category)
             {
-               
+
                 AzkarList.Add(item);
             }
 
@@ -269,23 +271,23 @@ namespace Khushoo3.ViewModel
 
         private void Close(object obj)
         {
-           
+
             PopUPZekrPage = false;
-           
+
         }
-        private async  void Selected(IGrouping<string, Azkar> obj)
+        private async void Selected(IGrouping<string, Azkar> obj)
         {
             LoadingText = "تحميل الذكر";
             IsBusy = true;
 
-            await Task.Delay(100);
-            
-          
+            //  await Task.Delay(100);
+
+
             PopUPZekrPage = true;
-         
+
 
             Azkar.Clear();
-          
+
             foreach (var i in obj)
             {
                 Azkar.Add(i);
@@ -293,17 +295,17 @@ namespace Khushoo3.ViewModel
 
             IsBusy = false;
 
-         
 
-           
+
+
         }
-       
+
 
 
 
         List<string> imgs;
         int ImageNO = 0;
-        public async  void LoadSalatData()
+        public async void LoadSalatData()
         {
             DataLoaded = false;
             IsBusy = true;
@@ -312,24 +314,24 @@ namespace Khushoo3.ViewModel
             try
             {
                 var current = Connectivity.NetworkAccess;
-                
-                
+
+
 
                 Con.CreateTable<DBST>();
                 var Table = Con.Table<DBST>().ToList();
 
-                
+
                 if (Table.Count == 0)
                 {
 
-                      await RequstData();
+                    await RequstData();
                 }
-              
+
                 else
                 {
                     if (DateTime.Parse(Table[0].Date).ToString("MM") != DateTime.Now.ToString("MM"))
                     {
-                         await  RequstData();
+                        await RequstData();
                     }
                 }
 
@@ -340,21 +342,21 @@ namespace Khushoo3.ViewModel
 
 
                 imgs = new List<string>();
-                        imgs.Add("FR");
-                        imgs.Add("SR");
-                        imgs.Add("ZH");
-                        imgs.Add("AS");
-                        imgs.Add("MA");
-                        imgs.Add("IS");
-                        foreach (var t in table)
-                        {
+                imgs.Add("FR");
+                imgs.Add("SR");
+                imgs.Add("ZH");
+                imgs.Add("AS");
+                imgs.Add("MA");
+                imgs.Add("IS");
+                foreach (var t in table)
+                {
 
 
-                            RequstDB(t);
-                            if (SalatTime.Count() == 6)
-                            { break; }
+                    RequstDB(t);
+                    if (SalatTime.Count() == 6)
+                    { break; }
 
-                        }
+                }
 
 
 
@@ -366,58 +368,62 @@ namespace Khushoo3.ViewModel
             }
             catch (Exception ex)
             {
-              await   App.Current.MainPage.DisplayAlert("Alert", ex.Message, "Cancel");
+                await App.Current.MainPage.DisplayAlert("Alert", ex.Message, "Cancel");
 
             }
             finally
             {
                 DataLoaded = true;
                 IsBusy = false;
-         
+
             }
-        
+
         }
-       
+
         //requst from DB
-        public   void RequstDB(DBST Item)
+        public void RequstDB(DBST Item)
         {
 
-         
+
             string ItemTime = Convert.ToDateTime(Item.Date).ToString("dd MM yyyy");
-          
+
             if (ItemTime == DateTime.Now.ToString("dd MM yyyy"))
-                        {
-                
-                            if (string.IsNullOrEmpty(Hdate))
-                            {
-                                Hdate = Item.HDate;
-                                Hmonth = Item.Month;
-                                Hday = day;
+            {
 
-                            }
-                            TodayST TS = new TodayST()
+                if (string.IsNullOrEmpty(Hdate))
+                {
+                    Hdate = Item.HDate;
+                    Hmonth = Item.Month;
+                    Hday = day;
 
-                            {
-                                Salat = Item.Salat,
-                                Time = Item.Time,
-                                IMGURI = imgs[ImageNO]
-                            };
+                }
+                TodayST TS = new TodayST()
 
-                            SalatTime.Add(TS);
-                            ImageNO++;
+                {
+                    Salat = Item.Salat,
+                    Time = Item.Time,
+                    IMGURI = imgs[ImageNO]
+                };
 
-                        }
-                      
+                SalatTime.Add(TS);
+                ImageNO++;
+
+            }
+
         }
 
-       // RequstData And Store it 
+        // RequstData And Store it 
         private async Task RequstData()
         {
-          
+            try
+            {
+
                 LoadingText = "تحديث مواقيت الصلاة";
                 var locator = await Geolocation.GetLocationAsync();
                 if (locator == null)
                 {
+                    await App.Current.MainPage.DisplayAlert("تنبيه", "قم بالسماح للتطبيق بالوصول للموقع لتعيين القبله و مواقيت الصلاه", "غلق");
+
                     var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
 
                     if (status != PermissionStatus.Granted || status == PermissionStatus.Denied)
@@ -438,7 +444,7 @@ namespace Khushoo3.ViewModel
                 var info = await RestHelper.GetAsync<Root>($"https://api.aladhan.com/v1/calendar?latitude={Latitude}&longitude={Longitude}&method=5&month={Month}&year={DateTime.Now.Year}&adjustment=1");
                 Con.DeleteAll<DBST>();
                 salattime = info.data;
-               
+
                 foreach (var Item in salattime)
                 {
 
@@ -469,11 +475,16 @@ namespace Khushoo3.ViewModel
                     }
                 }
 
-              
+
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("خطأ", ex.Message, "غلق");
+
+            }
 
 
-            
-           
+
         }
     }
 }

@@ -1,9 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.1" package="com.Ghaith.khushoo3" android:installLocation="preferExternal" android:versionCode="2">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
-	<application android:label="خشوع" android:supportsRtl="true" android:icon="@drawable/logo_round"></application>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
+  <application android:label="خشوع" android:supportsRtl="true" android:icon="@drawable/logo_round">
+    <receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <category android:name="com.Ghaith.khushoo3" />
+      </intent-filter>
+    </receiver>
+
+  </application>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <permission android:name="com.Ghaith.khushoo3.permission.C2D_MESSAGE"
+            android:protectionLevel="signature" />
+  <uses-permission android:name="com.Ghaith.khushoo3.permission.C2D_MESSAGE" />
 </manifest>
